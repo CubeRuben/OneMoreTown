@@ -10,9 +10,13 @@ public class CameraMovement : MonoBehaviour
 
     private Vector3 MovementVelocity;
 
+    private CameraArm CameraArm;
+
     private void Start()
     {
         MovementVelocity = Vector3.zero;
+
+        CameraArm = GetComponentInChildren<CameraArm>();
     }
 
     private void Update()
