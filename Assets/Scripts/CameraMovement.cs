@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private float MaxMovementSpeed;
-    [SerializeField] private float Acceleration;
     [SerializeField] private float Friction;
 
     private Vector3 MovementVelocity;
@@ -38,13 +37,7 @@ public class CameraMovement : MonoBehaviour
         //Apply acceleration if have player input
         else
         {
-            Vector3 movementDelta = inputDelta.normalized * Acceleration * Time.deltaTime;
-            MovementVelocity += movementDelta;
-
-            if (MovementVelocity.sqrMagnitude > Mathf.Pow(MaxMovementSpeed, 2)) 
-            {
-                MovementVelocity = MaxMovementSpeed * MovementVelocity.normalized;
-            }
+            MovementVelocity = inputDelta.normalized * MaxMovementSpeed * CameraArm.GetMaxSpeedMultiplier();
         }
         
         //Apply velocity

@@ -15,6 +15,11 @@ public class CameraArm : MonoBehaviour
 
     [SerializeField] private float TargetDistance;
 
+    public float GetMaxSpeedMultiplier()
+    {
+        return 2.0f * TargetDistance / (MaxDistance - MinDistance) + 1.0f;
+    }
+
     void Start()
     {
         TargetDistance = -CameraTransform.localPosition.z;
