@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-internal interface IInteractable
+public interface IInteractable
 {
     public void Interact();
 
