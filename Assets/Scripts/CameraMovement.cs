@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private float MovementSpeed = 5.0f;
-    [SerializeField] private float InterpolationSpeed = 1.0f;
-    [SerializeField] private Vector3 TargetLocation;
+    [SerializeField] private float _movementSpeed = 5.0f;
+    [SerializeField] private float _interpolationSpeed = 1.0f;
+    [SerializeField] private Vector3 _targetLocation;
 
-    private CameraArm CameraArm;
+    private CameraArm cameraArm;
 
     private void Start()
     {
-        TargetLocation = transform.position;
+        _targetLocation = transform.position;
 
-        CameraArm = GetComponentInChildren<CameraArm>();
+        cameraArm = GetComponentInChildren<CameraArm>();
     }
 
     private void Update()
@@ -23,8 +23,8 @@ public class CameraMovement : MonoBehaviour
         Vector3 inputDelta = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
         inputDelta.y = 0.0f;
 
-        TargetLocation += inputDelta.normalized * MovementSpeed * CameraArm.GetSpeedMultiplier() * Time.deltaTime;
+        _targetLocation += inputDelta.normalized * _movementSpeed * cameraArm.GetSpeedMultiplier() * Time.deltaTime;
 
-        transform.position = Vector3.LerpUnclamped(transform.position, TargetLocation, InterpolationSpeed * Time.deltaTime);
+        transform.position = Vector3.SlerpUnclamped(transform.position, _targetLocation, _interpolationSpeed * Time.deltaTime);
     }
 }
