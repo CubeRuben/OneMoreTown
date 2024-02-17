@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private float MaxMovementSpeed;
-    [SerializeField] private float Friction;
-
-    private Vector3 MovementVelocity;
+    [SerializeField] private float MovementSpeed = 5.0f;
+    [SerializeField] private float InterpolationSpeed = 1.0f;
+    [SerializeField] private Vector3 TargetLocation;
 
     private CameraArm CameraArm;
 
     private void Start()
     {
-        MovementVelocity = Vector3.zero;
+        TargetLocation = transform.position;
 
         CameraArm = GetComponentInChildren<CameraArm>();
     }
@@ -23,24 +22,9 @@ public class CameraMovement : MonoBehaviour
         //Read player input
         Vector3 inputDelta = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
         inputDelta.y = 0.0f;
-        
-        //Apply friction if no player input
-        if (inputDelta.sqrMagnitude <= 0.1)
-        {
-            MovementVelocity -= MovementVelocity.normalized * Friction * Time.deltaTime;
 
-            if (MovementVelocity.sqrMagnitude <= 0.001) 
-            {
-                MovementVelocity = Vector3.zero;
-            } 
-        }
-        //Apply acceleration if have player input
-        else
-        {
-            MovementVelocity = inputDelta.normalized * MaxMovementSpeed * CameraArm.GetMaxSpeedMultiplier();
-        }
-        
-        //Apply velocity
-        transform.position += MovementVelocity * Time.deltaTime;
+        TargetLocation += inputDelta.normalized * MovementSpeed * CameraArm.GetSpeedMultiplier() * Time.deltaTime;
+
+        transform.position = Vector3.LerpUnclamped(transform.position, TargetLocation, InterpolationSpeed * Time.deltaTime);
     }
 }
