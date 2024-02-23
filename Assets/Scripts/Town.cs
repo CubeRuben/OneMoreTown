@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
+[RequireComponent(typeof(LocalMarket))]
 public class Town : MonoBehaviour, IGameSimulatable
 {
+    [SerializeField] public string Name { get; private set; }
 
-    public int counter = 0;
+    [SerializeField]
+    private List<Population> _townPopulation = new List<Population>();
 
     void Start()
     {
@@ -20,8 +23,6 @@ public class Town : MonoBehaviour, IGameSimulatable
 
     public void SimulationUpdate()
     {
-        counter++;
-
-        Debug.Log("Tick " + counter);
+    
     }
 }
