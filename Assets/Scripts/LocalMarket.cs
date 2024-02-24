@@ -1,23 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LocalMarket : MonoBehaviour
 {
     struct Goods
     {
-        private int _id;
+        private string _id;
 
         public float Price;
 
         public string GetName()
         {
-            return ContentManager.Instance.GetGoodsById(_id).Name;
+            return DefinitionsContainer.Instance.GetGoods(_id).Name;
         }
 
         public override int GetHashCode()
         {
-            return _id;
+            return _id.GetHashCode();
         }
     }
 
